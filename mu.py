@@ -12,7 +12,9 @@ END = "MU" # never finds it? aha!
 
 
 # Performs the acutal test
-#   start -- starting string
+#   start -- starting string (Really, according to GEB, this should always be
+#       "MI". But I'm leaving it a bit more flexible for now, especially if I
+#       want to go recursive on this junk.)
 #   goal -- ending string
 #   max_iterations -- how long to try before giving up
 #   show_results -- show output along the way?

@@ -11,7 +11,12 @@ class TestMu(unittest.TestCase):
     should_pass = (('MI', 'MI', 1),
                    ('MI', 'MIU', 10),
                    ('MI', 'MII', 10),
-                   ('MI', 'MIIUIIU', 10))
+                   ('MI', 'MIIII', 10),
+                   ('MI', 'MIIIIU', 10),
+                   ('MI', 'MUIU', 10),
+                   ('MI', 'MIIUIIU', 10),
+                   ('MI', 'MUIUUIU', 10),
+                   ('MI', 'MIUIUIUIU', 10))
 
     should_fail = (('MI', 'MU', 10),
                    ('MI', 'MIIUIIU', 1))
