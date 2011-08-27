@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 
+import re
+
+
 MAX_ITERATIONS = 10
 START = "MI"
 #END = "MIIUIIU"
@@ -8,7 +11,9 @@ START = "MI"
 END = "MU" # never finds it? aha!
 
 
-# TODO: add exceptions for malformed input
+# The input, she is bad, yes?
+class BadInputError(Exception):
+    pass
 
 
 # Performs the acutal test
@@ -28,6 +33,14 @@ def mu_test(start, goal, max_iterations, show_results=False):
         print "Start:\t", start.upper()
         print "Goal:\t", goal.upper()
         print
+
+    # test for bad input
+    if not start or not goal:
+        raise BadInputError("Expected non-empty strings")
+    if not re.match(r"^M[IU]+$", start.upper()):
+        raise BadInputError("Malformed starting value")
+    if not re.match(r"^M[IU]+$", goal.upper()):
+        raise BadInputError("Malformed goal value")
 
     # just GTFO if start == goal
     if start == goal:

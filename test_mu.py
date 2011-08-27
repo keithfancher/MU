@@ -2,7 +2,9 @@
 
 
 import unittest
+
 from mu import mu_test
+from mu import BadInputError
 
 
 class TestMu(unittest.TestCase):
@@ -13,13 +15,27 @@ class TestMu(unittest.TestCase):
                    ('MI', 'MII', 10),
                    ('MI', 'MIIII', 10),
                    ('MI', 'MIIIIU', 10),
-                   ('MI', 'MUIU', 10),
+                   ('MI', 'MUIu', 10),
                    ('MI', 'MIIUIIU', 10),
                    ('MI', 'MUIUUIU', 10),
+                   ('MI', 'muiuuiu', 10),
                    ('MI', 'MIUIUIUIU', 10))
 
     should_fail = (('MI', 'MU', 10),
+                   ('MI', 'MUUUUUUUUUUUU', 10),
+                   ('MI', 'MUIUIUIUIUIUUIU', 10),
+                   ('MI', 'MIIUUUUUUUIIU', 10),
                    ('MI', 'MIIUIIU', 1))
+
+    bad_input = (('', '', 1),
+                 ('MI', '', 1),
+                 ('', 'MU', 1),
+                 ('M', 'MII', 10),
+                 ('MI', 'M', 10),
+                 ('MIA', 'MU', 10),
+                 ('MI', 'MIIhello', 10),
+                 ('hello', '92', 10),
+                 ('maximum', 'overdrive', 10))
 
     def test_known_good_pairs(self):
         """Test known successful pairs"""
@@ -31,9 +47,10 @@ class TestMu(unittest.TestCase):
         for start, goal, iternum in self.should_fail:
             self.assertFalse(mu_test(start, goal, iternum))
 
-    # TODO!
     def test_malformed_input(self):
-        pass
+        """Test invalid input"""
+        for start, goal, iternum in self.bad_input:
+            self.assertRaises(BadInputError, mu_test, start, goal, iternum)
 
 
 if __name__ == "__main__":
